@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kunal Jadhav | Robotics Software Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(0, 240, 96, 0.3);
+            }
+            33% {
+                box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+            }
+            66% {
+                box-shadow: 0 0 25px rgba(0, 102, 255, 0.4);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes colorShift {
+            0% { filter: hue-rotate(0deg); }
+            33% { filter: hue-rotate(120deg); }
+            66% { filter: hue-rotate(240deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        /* Scroll Animation Classes */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .animate-on-scroll.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .animate-left.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .animate-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .animate-right.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+        .stagger-5 { transition-delay: 0.5s; }
+        .stagger-6 { transition-delay: 0.6s; }
+        .stagger-7 { transition-delay: 0.7s; }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            background: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 40px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-title::before {
+            content: "> ";
+            background: linear-gradient(45deg, #00FF66, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .separator {
+            text-align: center;
+            margin: 60px 0;
+            background: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 102, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #cccccc;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            color: #cccccc;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #00FF66;
+            filter: drop-shadow(0 0 10px #8B5CF6);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 120px 40px 40px;
+            position: relative;
+        }
+
+        .hero-left {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .code-snippet {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 60px;
+        }
+
+        .code-comment {
+            color: #666;
+        }
+
+        .code-keyword {
+            color: #8B5CF6;
+        }
+
+        .code-string {
+            color: #0066FF;
+        }
+
+        .code-class {
+            color: #00FF66;
+        }
+
+        .hero-content {
+            text-align: left;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .hero-name {
+            background: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(0, 255, 102, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 40px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .cta-button {
+            background: transparent;
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF) 1;
+            color: #00FF66;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF);
+            color: #000000;
+            box-shadow: 0 0 30px rgba(0, 255, 102, 0.5);
+            transform: translateY(-2px);
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        .hero-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 500px;
+        }
+
+        .torn-image {
+            width: 500px;
+            height: 650px;
+            position: relative;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            color: #00FF66;
+            clip-path: polygon(0% 0%, 85% 0%, 100% 15%, 95% 25%, 100% 35%, 90% 45%, 100% 55%, 85% 65%, 100% 75%, 95% 85%, 100% 100%, 0% 100%);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .torn-image:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 30px 60px rgba(139, 92, 246, 0.3);
+        }
+
+        .torn-image::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            bottom: -5px;
+            left: -5px;
+            background: linear-gradient(45deg, #00FF66, #0066FF, #8B5CF6);
+            clip-path: polygon(0% 0%, 85% 0%, 100% 15%, 95% 25%, 100% 35%, 90% 45%, 100% 55%, 85% 65%, 100% 75%, 95% 85%, 100% 100%, 0% 100%);
+            z-index: -1;
+            opacity: 0.3;
+            animation: colorShift 8s ease-in-out infinite;
+        }
+
+        /* About Section */
+        .about-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #cccccc;
+            max-width: 800px;
+        }
+
+        /* Education Section */
+        .education-grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        .education-item {
+            background: linear-gradient(135deg, #001a0d, #1a0033, #001a33);
+            border: 1px solid;
+            border-image: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF) 1;
+            padding: 30px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .education-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+        }
+
+        .education-degree {
+            font-size: 1.3rem;
+            background: linear-gradient(45deg, #00FF66, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .education-school {
+            font-size: 1.1rem;
+            color: #ffffff;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .education-location {
+            color: #888888;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .education-year {
+            color: #0066FF;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .education-details p {
+            color: #cccccc;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .education-highlights {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .education-highlights li {
+            color: #cccccc;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+            font-size: 0.9rem;
+        }
+
+        .education-highlights li::before {
+            content: "▸";
+            background: linear-gradient(45deg, #00FF66, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-category {
+            background: linear-gradient(135deg, #001a0d, #1a0033, #001a33);
+            border: 1px solid;
+            border-image: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF) 1;
+            padding: 25px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.2);
+        }
+
+        .skill-category h3 {
+            background: linear-gradient(45deg, #00FF66, #0066FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            color: #cccccc;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .skill-list li::before {
+            content: "▸";
+            color: #8B5CF6;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #001a0d, #1a0033, #001a33);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 30px;
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #00FF66, #8B5CF6, #0066FF);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+        }
+
+        .project-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .project-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.3;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            background: linear-gradient(45deg, #00FF66, #0066FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .project-description {
+            color: #cccccc;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid;
+            border-image: linear-gradient(45deg, #00FF66, #8B5CF6) 1;
+            color: #00FF66;
+            padding: 8px 16px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: linear-gradient(45deg, #00FF66, #8B5CF6);
+            color: #000000;
+        }
+
+        /* Patents Section */
+        .patent-item {
+            background: linear-gradient(135deg, #001a0d, #1a0033);
+            border-left: 4px solid;
+            border-image: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF) 1;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .patent-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.2);
+        }
+
+        .patent-title {
+            background: linear-gradient(45deg, #00FF66, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .patent-date {
+            color: #888888;
+            font-size: 0.9rem;
+        }
+
+        /* Certifications Section */
+        .cert-terminal {
+            background: linear-gradient(135deg, #001a0d, #1a0033);
+            border: 1px solid;
+            border-image: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF) 1;
+            padding: 30px;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .cert-command {
+            background: linear-gradient(45deg, #00FF66, #0066FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .cert-list {
+            list-style: none;
+        }
+
+        .cert-list li {
+            color: #cccccc;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .cert-list li::before {
+            content: "✓";
+            color: #8B5CF6;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Leadership Section */
+        .leadership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .leadership-item {
+            background: linear-gradient(135deg, #001a0d, #1a0033);
+            border: 1px solid;
+            border-image: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF) 1;
+            padding: 25px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .leadership-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+        }
+
+        .leadership-title {
+            background: linear-gradient(45deg, #00FF66, #0066FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .leadership-org {
+            color: #cccccc;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .contact-item {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #001a0d, #1a0033, #001a33);
+            border: 1px solid;
+            border-image: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF) 1;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.2);
+        }
+
+        .contact-label {
+            background: linear-gradient(45deg, #00FF66, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .contact-value {
+            color: #cccccc;
+        }
+
+        .contact-value a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-value a:hover {
+            background: linear-gradient(45deg, #00FF66, #0066FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                flex-direction: column;
+                align-items: center;
+                padding: 100px 20px 40px;
+                text-align: center;
+            }
+            
+            .hero-left {
+                max-width: 100%;
+                margin-bottom: 40px;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .code-snippet {
+                font-size: 0.8rem;
+                text-align: left;
+            }
+            
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .torn-image {
+                width: 350px;
+                height: 450px;
+                font-size: 4rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #00FF66, #8B5CF6, #0066FF);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #8B5CF6, #0066FF);
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">&lt;KUNAL.J/&gt;</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="https://www.linkedin.com/in/kunaljadhav07" target="_blank">💼</a>
+                <a href="https://www.youtube.com/@kjcool0007" target="_blank">🎞️</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- Left: Code and Content -->
+        <div class="hero-left">
+            <div class="code-snippet">
+                <div class="code-comment"># Initialize Engineer's profile</div>
+                <div><span class="code-keyword">class</span> <span class="code-class">Engineer</span>:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">def</span> __init__(self):</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.name = <span class="code-string">"Kunal Jadhav"</span></div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.role = <span class="code-string">"Robotics Engineer"</span></div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.skills = [<span class="code-string">"Python"</span>, <span class="code-string">"C++"</span>, <span class="code-string">"ROS2"</span>]</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.passion = <span class="code-string">"Building the future"</span></div>
+            </div>
+
+            <div class="hero-content">
+                <h1 class="hero-title">> I AM <span class="hero-name">KUNAL</span> JADHAV</h1>
+                <p class="hero-subtitle">Robotics and Software Engineer</p>
+                <a href="images\KUNAL JADHAV.pdf" class="cta-button" target="_blank">&gt; READ MY CV &lt;</a>
+
+            </div>
+        </div>
+
+        <!-- Right: Torn Image -->
+        <div class="hero-right">
+            <div class="torn-image">
+                <img src="images\KUNAL.png" alt="Profile Image" style="width:100%; height:100%; object-fit: cover; border-radius: 8px;">
+            </div>
+        </div>
+    </section>
+
+    <div class="separator">// ----------------------- //</div>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">ABOUT_ME</h2>
+            <div class="about-content animate-on-scroll stagger-1">
+                <p>I’m Kunal Jadhav, a robotics enthusiast and problem-solver passionate about fusing AI with robotics to build machines that see, think, and move like humans.
+
+Armed with a Mechatronics & Automation Engineering degree from LPU, I’ve built projects from face-tracking robots to autonomous object finders, working with ROS 2, OpenCV, Python, C++, SolidWorks, Gazebo, and Rviz.
+
+Beyond the code, I believe innovation happens where engineering meets imagination—and I aim to create intelligent systems that make a real impact. 🚀.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator">// ----------------------- //</div>
+
+    <!-- Education Section -->
+    <section class="section" id="education">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">EDUCATION</h2>
+            <div class="education-grid">
+                <div class="education-item animate-left stagger-1">
+                    <div class="education-degree">Bachelor of Technology in Mechatronics and Automation Engineering</div>
+                    <div class="education-school">Lovely Professional University</div>
+                    <div class="education-location">Delhi-Jalandhar Road, Punjab</div>
+                    <div class="education-year">2020 - 2024</div>
+                    <div class="education-details">
+                        <p>Specialized in Robotics and Automation with focus on ROS2, Computer Vision, and Embedded Systems</p>
+                        <ul class="education-highlights">
+                            <li>Relevant Coursework: Control Systems, Programming, CAD/CAM, MicroProcessor and Microcontroller</li>
+                            <li>Projects: Customized Automated Wheelchair, Robotic Arm Design, Arduino Robots</li>
+                            <li>Active member of Clubs and National Service Scheme helping the surrounding develop</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="education-item animate-right stagger-2">
+                    <div class="education-degree">Maharashtra State Board of Secondary and Higher Secondary Education (HSC)</div>
+                    <div class="education-school">Science Stream - Physics, Chemistry, Mathematics and Electronics</div>
+                    <div class="education-location">Aurangabad(Sambhajinagar), Maharashtra</div>
+                    <div class="education-year">2018 - 2020</div>
+                    <div class="education-details">
+                        <p>Developed Strong foundation in Electronics and it helped me develop interest in Electro-Mechanical Systems, laying groundwork for engineering studies</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator">// ----------------------- //</div>
+
+    <!-- Skills Section -->
+    <section class="section" id="skills">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">CORE_COMPETENCIES</h2>
+            <div class="skills-grid">
+                <div class="skill-category animate-on-scroll stagger-1">
+                    <h3>Programming</h3>
+                    <ul class="skill-list">
+                        <li>Python</li>
+                        <li>C++</li>
+                        <li>ROS2</li>
+                        <li>OpenCV</li>
+                    </ul>
+                </div>
+                <div class="skill-category animate-on-scroll stagger-2">
+                    <h3>Robotics Tools</h3>
+                    <ul class="skill-list">
+                        <li>Gazebo</li>
+                        <li>RViz</li>
+                        <li>URDF</li>
+                        <li>Raspberry Pi</li>
+                        <li>Ubuntu(Linux)</li>
+                        
+                    </ul>
+                </div>
+                <div class="skill-category animate-on-scroll stagger-3">
+                    <h3>CAD & Design</h3>
+                    <ul class="skill-list">
+                        <li>SolidWorks</li>
+                        <li>Creo</li>
+                        <li>3D Printing</li>
+                        <li>Arduino</li>
+                    </ul>
+                </div>
+                <div class="skill-category animate-on-scroll stagger-4">
+                    <h3>Soft Skills</h3>
+                    <ul class="skill-list">
+                        <li>Leadership</li>
+                        <li>Time Management</li>
+                        <li>Analytical Thinking</li>
+                        <li>Team Collaboration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator">// ----------------------- //</div>
+
+    <!-- Projects Section -->
+    <section class="section" id="projects">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">_PROJECTS</h2>
+            <div class="projects-grid">
+                <div class="project-card animate-on-scroll stagger-1">
+                    <div class="project-number">01</div>
+                    <h3 class="project-title">Autonomous Drone</h3>
+                    <p class="project-description">KK Flight Controller for UAV stability with advanced navigation, plus a quadcopter URDF model simulating structure and flight dynamics in ROS.</p>
+                    <a href="https://github.com/KunalJadhao/Autonomous-Navigation-Drone" class="project-link" target="_blank">GitHub</a>
+
+                </div>
+                
+                <div class="project-card animate-on-scroll stagger-2">
+                    <div class="project-number">02</div>
+                    <h3 class="project-title">AirCanvas with OpenCV</h3>
+                    <p class="project-description">Hand gesture AI drawing application using computer vision and machine learning techniques.</p>
+                    <a href="https://github.com/KunalJadhao/AIRCANVAS" class="project-link" target="_blank">GitHub</a>
+                </div>
+                
+                <div class="project-card animate-on-scroll stagger-3">
+                    <div class="project-number">03</div>
+                    <h3 class="project-title">ROS2 TurtleSim Simulation</h3>
+                    <p class="project-description">Motion control nodes and path planning algorithms for robotic simulation environment.</p>
+                    <a href="https://github.com/KunalJadhao/TurtleSim_ROS2_Project" class="project-link" target="_blank">GitHub</a>
+                </div>
+                
+                <div class="project-card animate-on-scroll stagger-4">
+                    <div class="project-number">04</div>
+                    <h3 class="project-title">ROS2 Virtual Face Tracking</h3>
+                    <p class="project-description">Vision-based navigation system for autonomous object detection and tracking.</p>
+                    <a href="https://github.com/KunalJadhao/ROS2-Face-Tracking" class="project-link" target="_blank">GitHub</a>
+                </div>
+                
+                <div class="project-card animate-on-scroll stagger-5">
+                    <div class="project-number">05</div>
+                    <h3 class="project-title">Automated Wheelchair Assembly</h3>
+                    <p class="project-description">Assistive robotics system with patent-pending automated assembly mechanism.</p>
+                    <a href="https://iprsearch.ipindia.gov.in/PatentSearch/PatentSearch/ViewApplicationStatus" class="project-link" target="_blank">Patent Link</a>
+                    
+                </div>
+                
+                <div class="project-card animate-on-scroll stagger-6">
+                    <div class="project-number">06</div>
+                    <h3 class="project-title">Robotic Arm</h3>
+                    <p class="project-description">3D-printed Arduino-controlled manipulator with Bluetooth wireless control interface.</p>
+                    <a href="#" class="project-link">GitHub</a>
+                </div>
+                
+                <div class="project-card animate-on-scroll stagger-7">
+                    <div class="project-number">07</div>
+                    <h3 class="project-title">Track-Bot</h3>
+                    <p class="project-description">Line following robot with autonomous navigation and obstacle avoidance capabilities.</p>
+                    <a href="#" class="project-link">GitHub</a>
+                </div>
+
+                <div class="project-card animate-on-scroll stagger-2">
+                    <div class="project-number">08</div>
+                    <h3 class="project-title">4-Wheel Autonomous Robot RVIZ and URDF</h3>
+                    <p class="project-description">Designed and built a 4-wheel autonomous robot URDF model, enabling realistic simulation, kinematics, and navigation in ROS</p>
+                    <a href="https://github.com/KunalJadhao/4-Wheel-Autonomous-Robot-" class="project-link" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator">// ----------------------- //</div>
+
+    <!-- Patents Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">PATENTS</h2>
+            <div class="patent-item animate-left stagger-1">
+                <div class="patent-title">Customized Automated Wheelchair Assembly</div>
+                <div class="patent-date">Issued December 2023</div>
+            </div>
+            <div class="patent-item animate-left stagger-2">
+                <div class="patent-title">Modular Self-Dismantling Drone</div>
+                <div class="patent-date">Filed May 2025</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator">// ----------------------- //</div>
+
+    <!-- Certifications Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">CERTIFICATIONS</h2>
+            <div class="cert-terminal animate-on-scroll stagger-1">
+                <div class="cert-command">$ certifications --list</div>
+                <ul class="cert-list">
+                    <li>ROS2 Advanced Concepts - UDEMY</li>
+                    <li>OpenCV Bootcamp - OpenCV University</li>
+                    <li>Machine Learning offered by Stanford University - Coursera</li>
+                    <li>Computer Vision & Image Processing offered by IBM - Coursera</li>
+                    <li>SolidWorks CAD Design - DIY Guru</li>
+                    <li>Creo Parametric CAD Design - LPU</li>
+                    <li>Aerial Robotics By University of Pennsylvania - Coursera</li>
+                    <li>Control Systems - UDEMY</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator">// ----------------------- //</div>
+
+    <!-- Leadership Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">LEADERSHIP_ROLES</h2>
+            <div class="leadership-grid">
+                <div class="leadership-item animate-on-scroll stagger-1">
+                    <div class="leadership-title">Director</div>
+                    <div class="leadership-org">Pahal an Initiation - Led design and technical teams</div>
+                </div>
+                <div class="leadership-item animate-on-scroll stagger-2">
+                    <div class="leadership-title">Volunteer</div>
+                    <div class="leadership-org">National Service Scheme - Community service initiatives</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator">// ----------------------- //</div>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">CONTACT_INFO</h2>
+            <div class="contact-grid">
+                <div class="contact-item animate-on-scroll stagger-1">
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value">
+                        <a href="mailto:connectkunaljadhav@gmail.com">connectkunaljadhav@gmail.com</a>
+                    </div>
+                </div>
+                <div class="contact-item animate-on-scroll stagger-2">
+                    <div class="contact-label">Phone</div>
+                    <div class="contact-value">+91-7986625512</div>
+                </div>
+                <div class="contact-item animate-on-scroll stagger-3">
+                    <div class="contact-label">Location</div>
+                    <div class="contact-value">Mumbai, Maharashtra</div>
+                </div>
+                <div class="contact-item animate-on-scroll stagger-4">
+                    <div class="contact-label">Links</div>
+                    <div class="contact-value">
+                        <a href="https://www.linkedin.com/in/kunaljadhav07" target="_blank">LinkedIn</a> | 
+                        <a href="https://github.com/KunalJadhao" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles.js configuration with multi-color particles
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: ['#00FF66', '#8B5CF6', '#0066FF']
+                },
+                shape: {
+                    type: 'circle',
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    }
+                },
+                opacity: {
+                    value: 0.3,
+                    random: false,
+                    anim: {
+                        enable: false,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false,
+                        speed: 40,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#8B5CF6',
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'repulse'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 400,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    bubble: {
+                        distance: 400,
+                        size: 40,
+                        duration: 2,
+                        opacity: 8,
+                        speed: 3
+                    },
+                    repulse: {
+                        distance: 200,
+                        duration: 0.4
+                    },
+                    push: {
+                        particles_nb: 4
+                    },
+                    remove: {
+                        particles_nb: 2
+                    }
+                }
+            },
+            retina_detect: true
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add typing effect to hero title
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize typing effect when page loads
+        window.addEventListener('load', function() {
+            const heroTitle = document.querySelector('.hero-content h1');
+            const originalText = heroTitle.textContent;
+            typeWriter(heroTitle, originalText, 150);
+        });
+
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animation classes
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate-on-scroll, .animate-left, .animate-right');
+            animateElements.forEach(el => observer.observe(el));
+        });
+
+        // Add click animation to project cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+
+        // Add click animation to skill categories
+        document.addEventListener('DOMContentLoaded', function() {
+            const skillCategories = document.querySelectorAll('.skill-category');
+            skillCategories.forEach(category => {
+                category.addEventListener('click', function() {
+                    this.style.animation = 'pulse 0.6s ease-in-out';
+                    setTimeout(() => {
+                        this.style.animation = '';
+                    }, 600);
+                });
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+                navbar.style.backdropFilter = 'blur(15px)';
+            } else {
+                navbar.style.background = 'rgba(0, 0, 0, 0.9)';
+                navbar.style.backdropFilter = 'blur(10px)';
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'979cc1f2c41347e3',t:'MTc1Njk4MTI2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
